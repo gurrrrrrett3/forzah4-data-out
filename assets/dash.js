@@ -6,6 +6,8 @@ var droppedFrames = 0;
 
 var dataOut = {};
 
+var accelArray = [];
+
 const constData = {
   /**
    *
@@ -171,6 +173,70 @@ async function animate() {
         20,
         window.innerHeight - 370
       );
+      ctx.fillText(
+        `X: ${Math.round(dataOut.posX)}`,
+        20,
+        window.innerHeight - 650
+      );
+      ctx.fillText(
+        `Y: ${Math.round(dataOut.posY)}`,
+        20,
+        window.innerHeight - 620
+      );
+      ctx.fillText(
+        `Z: ${Math.round(dataOut.posZ)}`,
+        20,
+        window.innerHeight - 590
+      );
+
+      ctx.fillText(
+        `Race Time: ${msToTime(dataOut.currentRaceTime * 1000)}`,
+        20,
+        window.innerHeight - 390
+      );
+
+      ctx.fillText(`Best Lap: ${msToTime(dataOut.bestLap * 1000)}`, 20, window.innerHeight - 480)
+      ctx.fillText(`Last Lap: ${msToTime(dataOut.lastLap * 1000)}`, 20, window.innerHeight - 450)
+      ctx.fillText(`Current Lap: ${msToTime(dataOut.currentLap * 1000)}`, 20, window.innerHeight - 420)
+      //Accel Array management
+
+      if (accelArray.length < 256) {
+        accelArray.push({
+          x: dataOut.accelX,
+          y: dataOut.accelY,
+          z: dataOut.accelZ,
+        });
+      } else {
+        accelArray.shift();
+        accelArray.push({
+          x: dataOut.accelX,
+          y: dataOut.accelY,
+          z: dataOut.accelZ,
+        });
+      }
+
+      ctx.save();
+      ctx.lineWidth = 3;
+
+      ctx.beginPath();
+      ctx.strokeStyle = "#FF0000";
+      accelArray.forEach((e, i) => {
+        ctx.lineTo((i / 256) * window.innerWidth, e.x + 70);
+      });
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.strokeStyle = "#00FF00";
+      accelArray.forEach((e, i) => {
+        ctx.lineTo((i / 256) * window.innerWidth, e.y + 70);
+      });
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.strokeStyle = "#0000FF";
+      accelArray.forEach((e, i) => {
+        ctx.lineTo((i / 256) * window.innerWidth, e.z + 70);
+      });
+      ctx.stroke();
+      ctx.restore();
     } else {
       ctx.fillText("Paused", 10, 100);
     }
@@ -245,3 +311,16 @@ function ConText(ctx, text, x, y, val, yColor, nColor) {
   ctx.fillText(text, x, y);
   ctx.restore();
 }
+
+function msToTime(duration) {
+    var milliseconds = Math.floor((duration % 1000) / 100),
+      seconds = Math.floor((duration / 1000) % 60),
+      minutes = Math.floor((duration / (1000 * 60)) % 60),
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+  
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  }
