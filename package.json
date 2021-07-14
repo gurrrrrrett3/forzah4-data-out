@@ -1,0 +1,23 @@
+{
+  "name": "forzah4-data-out",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurrrrrrett3/forzah4-data-out.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gurrrrrrett3/forzah4-data-out/issues"
+  },
+  "homepage": "https://github.com/gurrrrrrett3/forzah4-data-out#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
