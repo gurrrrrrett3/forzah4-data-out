@@ -2,8 +2,8 @@
     "udp_port": 3343,
     "web_port": 3334,
 
-    "light_controller_mode": "2",
-    "light_controller_address": "http://10.0.0.82:3333",
+    "light_controller_mode": 2,
+    "light_controller_address": "http://10.0.0.82:3333/",
 
     "data_file_path": "./data.json" 
 }
