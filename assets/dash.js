@@ -97,6 +97,8 @@ async function animate() {
     ctx.lineWidth = 0.2;
     ctx.strokeStyle = "#fff";
 
+    frameCount ++ 
+
     try {
       await fetch("/data")
         .then((response) => response.json())
@@ -154,6 +156,9 @@ async function animate() {
         false
       );
 
+      DrawSlider(ctx, window.innerWidth - 300, window.innerHeight - 50, 250, (dataOut.drivingLine / 127) * 100, "#fff", true )
+      DrawSlider(ctx, window.innerWidth - 300, window.innerHeight - 80, 250, (dataOut.brakeDifference / 127) * 100, "#fff", true )
+
       ctx.font = "24px Arial";
       ctx.fillText(`Gear ${dataOut.gear}`, 110, window.innerHeight - 300);
       ctx.fillText(
@@ -198,6 +203,45 @@ async function animate() {
       ctx.fillText(`Best Lap: ${msToTime(dataOut.bestLap * 1000)}`, 20, window.innerHeight - 480)
       ctx.fillText(`Last Lap: ${msToTime(dataOut.lastLap * 1000)}`, 20, window.innerHeight - 450)
       ctx.fillText(`Current Lap: ${msToTime(dataOut.currentLap * 1000)}`, 20, window.innerHeight - 420)
+
+      //brake Lights
+
+      ctx.save()
+      ctx.lineWidth = 5
+        ctx.strokeStyle = "#F00"
+        ctx.fillStyle = "#F00"
+        ctx.beginPath()
+      ctx.arc(window.innerWidth - 50, 200, 25, 0, 2 * Math.PI)
+      if (dataOut.brakeDifference > 25) {
+          ctx.fill()
+      } else {
+          ctx.stroke()
+      }
+
+      ctx.strokeStyle = "#FFF"
+        ctx.fillStyle = "#FFF"
+        ctx.beginPath()
+      ctx.arc(window.innerWidth - 50, 260, 25, 0, 2 * Math.PI)
+      if (dataOut.brakeDifference < 25 && dataOut.brakeDifference > -25) {
+          ctx.fill()
+      } else {
+          ctx.stroke()
+      }
+
+      ctx.strokeStyle = "#0F0"
+      ctx.fillStyle = "#0F0"
+      ctx.beginPath()
+    ctx.arc(window.innerWidth - 50, 320, 25, 0, 2 * Math.PI)
+    if (dataOut.brakeDifference < -25) {
+        ctx.fill()
+    } else {
+        ctx.stroke()
+    }
+
+      ctx.restore()
+
+      if (dataOut)
+
       //Accel Array management
 
       if (accelArray.length < 256) {
@@ -244,7 +288,7 @@ async function animate() {
     ctx.fillText(
       `${droppedFrames} Dropped frames (${Math.round(
         droppedFrames * (1000 / 33)
-      )}ms)`,
+      )}ms, ${Math.round((droppedFrames / frameCount) * 1000) / 10}%)`,
       10,
       window.innerHeight - 20
     );

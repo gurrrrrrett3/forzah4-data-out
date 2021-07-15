@@ -78,6 +78,9 @@ server.on("message", (msg, rinfo) => {
     handBrake: msg.readUInt8(318), //1
     gear: msg.readUInt8(319), //1
     steer: msg.readInt8(320), //1
+
+    drivingLine: msg.readInt8(321), //1
+    brakeDifference: msg.readInt8(322) //1
   };
 
   fs.writeFileSync("./data.json", JSON.stringify(dataOut, null, 4));
