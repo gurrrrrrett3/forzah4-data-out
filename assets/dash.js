@@ -368,3 +368,17 @@ function msToTime(duration) {
   
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
   }
+
+
+function SetLEDColor(hex) {
+
+  fetch("http://10.0.0.82:3333/", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      Accept: "application/json",
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ hex: hex }),
+  });
+}

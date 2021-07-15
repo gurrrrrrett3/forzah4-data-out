@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/gurrrrrrett3/forzah4-data-out#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "rainbowvis.js": "^1.0.1"
   }
 }
