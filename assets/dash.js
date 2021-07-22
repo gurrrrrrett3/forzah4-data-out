@@ -117,6 +117,14 @@ async function animate() {
         window.innerHeight - 200
       );
 
+      ctx.font = "24px Arial";
+
+      ctx.fillText(
+        `${localStorage.getItem("speed")} MPH`,
+        110,
+        window.innerHeight - 180
+      );
+
       DrawSlider(
         ctx,
         20,
@@ -293,6 +301,24 @@ async function animate() {
       window.innerHeight - 20
     );
   }
+
+
+  if (localStorage.getItem("speed") == null) {
+    localStorage.setItem("speed", 0)
+  }
+  
+  const storedSpeed = Number.parseFloat(localStorage.getItem("speed"))
+  const speed = Math.round(dataOut.speed * 2.237)
+  
+  if (speed > storedSpeed) {
+  
+  
+    localStorage.setItem("speed", speed)
+  
+  
+  }
+
+
 }
 
 /**
@@ -382,3 +408,7 @@ function SetLEDColor(hex) {
     body: JSON.stringify({ hex: hex }),
   });
 }
+
+
+//top data
+
