@@ -46,6 +46,8 @@ server.on("error", (err) => {
 server.on("message", (msg, rinfo) => {
   frameCount++;
 
+  console.log(frameCount)
+
   var dataOut = {
     gameOn: msg.readInt32LE(0), //4
     timestamp: msg.readUInt32LE(4), //4
@@ -183,7 +185,7 @@ app.get("/data", (req, res) => {
 });
 
 function SetLEDColor(color) {
-  fetch(light_controller_address, {
+ try { fetch(light_controller_address, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -191,4 +193,9 @@ function SetLEDColor(color) {
     },
     body: JSON.stringify({ hex: color }),
   });
+} catch (err) {
+
+  console.err(err)
+
+}
 }
